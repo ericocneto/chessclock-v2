@@ -1,25 +1,25 @@
 type Props = {
-  playing: "white" | "black";
-  setPlaying: React.Dispatch<React.SetStateAction<"white" | "black">>;
+  playing: "white" | "black" | null;
+  setPlaying: React.Dispatch<React.SetStateAction<"white" | "black" | null>>;
+  time: string;
 };
-export default function BlackDisplay({ playing, setPlaying }: Props) {
-  if (playing === "black") {
-    return (
-      <div
-        onClick={() => setPlaying(playing === "white" ? "black" : "white")}
-        className="flex flex-col items-center justify-center w-80 h-80 bg-neutral-800/40 rounded-2xl cursor-pointer"
-      >
-        <span className="text-5xl  font-bold text-white">00:00</span>
-      </div>
-    );
-  } else if (playing === "white") {
-    return (
-      <div
-        onClick={() => setPlaying(playing === "white" ? "black" : "white")}
-        className="flex flex-col items-center justify-center w-72 h-72 bg-neutral-800/40 rounded-2xl cursor-pointer"
-      >
-        <span className="text-5xl  font-bold text-white">00:00</span>
-      </div>
-    );
-  }
+
+export default function BlackDisplay({ playing, setPlaying, time }: Props) {
+  const isActive = playing === "black";
+  const sizeClass = isActive ? "w-80 h-80" : "w-72 h-72";
+
+  const handleClick = () => {
+    if (isActive) {
+      setPlaying("white");
+    }
+  };
+
+  return (
+    <div
+      onClick={handleClick}
+      className={`flex flex-col items-center justify-center ${sizeClass} bg-neutral-800/40 rounded-2xl cursor-pointer`}
+    >
+      <span className="text-5xl font-bold text-white">{time}</span>
+    </div>
+  );
 }
