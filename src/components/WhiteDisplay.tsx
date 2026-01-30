@@ -11,5 +11,4 @@ export default function WhiteDisplay({ playing, setPlaying }: Props) {
       <span className="text-5xl  font-bold text-white">00:00</span>
     </div>
   );
-  console.log(playing);
 }
