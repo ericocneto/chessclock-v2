@@ -6,7 +6,7 @@ type Props = {
 
 export default function WhiteDisplay({ playing, setPlaying, time }: Props) {
   const isActive = playing === "white";
-  const sizeClass = isActive ? "w-80 h-80" : "w-72 h-72";
+  const sizeClass = isActive ? "w-74 h-74" : "w-72 h-72";
 
   const handleClick = () => {
     if (isActive) {
