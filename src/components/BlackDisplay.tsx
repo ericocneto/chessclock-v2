@@ -1,11 +1,11 @@
 type Props = {
-  playing: "white" | "black" | null;
+  turn: "white" | "black" | null;
   time: string;
   handleClick: () => void;
 };
 
-export default function BlackDisplay({ playing, time, handleClick }: Props) {
-  const isActive = playing === "black";
+export default function BlackDisplay({ turn, time, handleClick }: Props) {
+  const isActive = turn === "black";
   const sizeClass = isActive ? "w-74 h-74" : "w-72 h-72";
 
   return (

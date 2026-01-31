@@ -6,16 +6,17 @@ import { useEffect, useState } from "react";
 export default function ClockContainer() {
   const [whiteSeconds, setWhiteSeconds] = useState<number>(300);
   const [blackSeconds, setBlackSeconds] = useState<number>(300);
-  const [playing, setPlaying] = useState<"white" | "black" | null>(null);
+  const [turn, setTurn] = useState<"white" | "black" | null>(null);
+  const [isPaused, setIsPaused] = useState<boolean>(true);
 
   useEffect(() => {
     let timer: number | null = null;
 
-    if (playing === "white" && whiteSeconds > 0) {
+    if (!isPaused && turn === "white" && whiteSeconds > 0) {
       timer = setInterval(() => {
         setWhiteSeconds((prev) => prev - 1);
       }, 1000);
-    } else if (playing === "black" && blackSeconds > 0) {
+    } else if (!isPaused && turn === "black" && blackSeconds > 0) {
       timer = setInterval(() => {
         setBlackSeconds((prev) => prev - 1);
       }, 1000);
@@ -24,7 +25,7 @@ export default function ClockContainer() {
     return () => {
       if (timer) clearInterval(timer);
     };
-  }, [playing]);
+  }, [turn, isPaused]);
 
   const formatTime = (totalSeconds: number): string => {
     const minutes = Math.floor(totalSeconds / 60)
@@ -35,32 +36,34 @@ export default function ClockContainer() {
   };
 
   const handleSwitchTurn = () => {
-    if (!playing) return;
-    setPlaying((prev) => (prev === "white" ? "black" : "white"));
+    if (isPaused) return;
+    setTurn((prev) => (prev === "white" ? "black" : "white"));
   };
 
   const handleClick = () => {
-    if (playing === null) {
-      setPlaying("white");
+    if (turn === null) {
+      setTurn("white");
+      setIsPaused(false);
+      return;
     }
+    setIsPaused((prev) => !prev);
   };
   return (
     <>
-      <Navbar handleClick={handleClick} />
-
       <div className="flex gap-8">
         <WhiteDisplay
-          playing={playing}
+          turn={turn}
           time={formatTime(whiteSeconds)}
           handleClick={handleSwitchTurn}
         />
 
         <BlackDisplay
-          playing={playing}
+          turn={turn}
           time={formatTime(blackSeconds)}
           handleClick={handleSwitchTurn}
         />
       </div>
+      <Navbar handleClick={handleClick} isPaused={isPaused} turn={turn} />
     </>
   );
 }
