@@ -3,9 +3,9 @@ import WhiteDisplay from "./WhiteDisplay";
 import { useEffect, useState } from "react";
 
 export default function ClockContainer() {
-  const [whiteSeconds, setWhiteSeconds] = useState<number>(60);
-  const [blackSeconds, setBlackSeconds] = useState<number>(60);
-  const [playing, setPlaying] = useState<"white" | "black" | null>("white");
+  const [whiteSeconds, setWhiteSeconds] = useState<number>(300);
+  const [blackSeconds, setBlackSeconds] = useState<number>(300);
+  const [playing, setPlaying] = useState<"white" | "black" | null>(null);
 
   useEffect(() => {
     let timer: number | null = null;
@@ -35,7 +35,10 @@ export default function ClockContainer() {
 
   // Função para alternar turnos (pode ser chamada pelos displays)
   const switchTurn = () => {
-    setPlaying((prev) => (prev === "white" ? "black" : "white"));
+    setPlaying((prev) => {
+      if (prev === null) return "white"; // primeiro clique
+      return prev === "white" ? "black" : "white";
+    });
   };
 
   return (

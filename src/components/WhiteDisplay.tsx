@@ -9,9 +9,11 @@ export default function WhiteDisplay({ playing, setPlaying, time }: Props) {
   const sizeClass = isActive ? "w-74 h-74" : "w-72 h-72";
 
   const handleClick = () => {
-    if (isActive) {
-      setPlaying("black");
-    }
+    setPlaying((prev) => {
+      if (prev === null) return "white";
+      if (prev === "white") return "black";
+      return prev;
+    });
   };
 
   return (
