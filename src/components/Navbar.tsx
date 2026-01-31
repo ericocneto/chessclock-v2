@@ -6,8 +6,8 @@ export default function Navbar() {
     <div className="h-20 w-150 flex justify-center items-center rounded-full bg-white/4">
       <nav className="flex flex-row flex-nowrap gap-8">
         {" "}
-        <Play className="text-white size-12 cursor-pointer hover:text-neutral-300 transition ease-in-out" />
-        <Settings className="text-white size-12 cursor-pointer hover:text-neutral-300 transition ease-in-out" />
+        <Play className="text-neutral-300 size-12 cursor-pointer hover:text-white transition ease-in-out" />
+        <Settings className="text-neutral-300 size-12 cursor-pointer hover:text-white transition ease-in-out" />
       </nav>
     </div>
   );
