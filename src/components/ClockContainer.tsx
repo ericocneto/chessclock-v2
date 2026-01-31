@@ -1,5 +1,6 @@
 import BlackDisplay from "./BlackDisplay";
 import WhiteDisplay from "./WhiteDisplay";
+import Navbar from "./Navbar";
 import { useEffect, useState } from "react";
 
 export default function ClockContainer() {
@@ -23,7 +24,7 @@ export default function ClockContainer() {
     return () => {
       if (timer) clearInterval(timer);
     };
-  }, [playing, whiteSeconds, blackSeconds]); // Dependências para reagir a mudanças
+  }, [playing]);
 
   const formatTime = (totalSeconds: number): string => {
     const minutes = Math.floor(totalSeconds / 60)
@@ -33,28 +34,33 @@ export default function ClockContainer() {
     return `${minutes}:${secs}`;
   };
 
-  // Função para alternar turnos (pode ser chamada pelos displays)
-  const switchTurn = () => {
-    setPlaying((prev) => {
-      if (prev === null) return "white"; // primeiro clique
-      return prev === "white" ? "black" : "white";
-    });
+  const handleSwitchTurn = () => {
+    if (!playing) return;
+    setPlaying((prev) => (prev === "white" ? "black" : "white"));
   };
 
+  const handleClick = () => {
+    if (playing === null) {
+      setPlaying("white");
+    }
+  };
   return (
-    <div className="flex gap-8">
-      <WhiteDisplay
-        playing={playing}
-        setPlaying={setPlaying}
-        time={formatTime(whiteSeconds)}
-        onSwitch={switchTurn}
-      />
-      <BlackDisplay
-        playing={playing}
-        setPlaying={setPlaying}
-        time={formatTime(blackSeconds)}
-        onSwitch={switchTurn}
-      />
-    </div>
+    <>
+      <Navbar handleClick={handleClick} />
+
+      <div className="flex gap-8">
+        <WhiteDisplay
+          playing={playing}
+          time={formatTime(whiteSeconds)}
+          handleClick={handleSwitchTurn}
+        />
+
+        <BlackDisplay
+          playing={playing}
+          time={formatTime(blackSeconds)}
+          handleClick={handleSwitchTurn}
+        />
+      </div>
+    </>
   );
 }

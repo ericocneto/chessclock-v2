@@ -1,18 +1,12 @@
 type Props = {
   playing: "white" | "black" | null;
-  setPlaying: React.Dispatch<React.SetStateAction<"white" | "black" | null>>;
   time: string;
+  handleClick: () => void;
 };
 
-export default function BlackDisplay({ playing, setPlaying, time }: Props) {
+export default function BlackDisplay({ playing, time, handleClick }: Props) {
   const isActive = playing === "black";
   const sizeClass = isActive ? "w-74 h-74" : "w-72 h-72";
-
-  const handleClick = () => {
-    if (isActive) {
-      setPlaying("white");
-    }
-  };
 
   return (
     <div
